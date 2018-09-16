@@ -1,9 +1,11 @@
 import * as jsonfile from 'jsonfile';
+import { GitPullRequest } from 'azure-devops-node-api/interfaces/GitInterfaces';
 
 export interface IState {
     repoIds: {
         [key: string]: string;
     };
+    pullRequests: GitPullRequest[];
 }
 
 const STATE_FILE = './state.json';
@@ -15,7 +17,8 @@ export const getState = async (): Promise<IState> => {
     } catch {
         console.log('Missing state file. Assuming initial state...');
         return {
-            repoIds: {}
+            repoIds: {},
+            pullRequests: []
         };
     }
 };

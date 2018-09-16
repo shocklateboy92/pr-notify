@@ -22,5 +22,10 @@ export async function fetchActivePullRequests(git: IGitApi, repoIds: string[]) {
         results = results.concat(prs);
     }
 
+    console.log(
+        `Fetched ${results.length} active pull requets for ${
+            repoIds.length
+        } repos.`
+    );
     return results;
 }
