@@ -1,24 +1,24 @@
-import * as fs from 'fs';
+import * as jsonfile from 'jsonfile';
 
 export interface IState {
     repoIds: {
-        [key: string]: string
-    }
+        [key: string]: string;
+    };
 }
 
 const STATE_FILE = './state.json';
 
-export const getState = () => new Promise<IState>(resolve => {
-    if (!fs.existsSync(STATE_FILE)) {
-        console.warn('State file does not exist. Assuming blank state...');
-        resolve({
+export const getState = async (): Promise<IState> => {
+    try {
+        // stupid type definition didn't define the overload correctly
+        return ((await jsonfile.readFile(STATE_FILE)) as any) as IState;
+    } catch {
+        console.log('Missing state file. Assuming initial state...');
+        return {
             repoIds: {}
-        })
+        };
     }
+};
 
-    // fs.readFile(STATE_FILE, (error, file) => JSON.parse(file.))
-})
-
-// export const setState = () => new Promise<void>(resolve => {
-//     fs.writeFile()
-// })
+export const setState = (state: IState) =>
+    jsonfile.writeFile(STATE_FILE, state, { spaces: 2 });

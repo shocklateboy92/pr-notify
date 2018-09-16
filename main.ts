@@ -1,9 +1,9 @@
 import * as azdev from 'azure-devops-node-api';
 import { updateRepos } from './repos';
-import { getState } from './state';
+import { getState, setState } from './state';
 
-const ORG_URL = "https://microsoft.visualstudio.com";
-const PAT = "nszqakn4d5kktanud3rm6sjswphe4eoxx6qwmsxbiohqqasmiedq";
+const ORG_URL = 'https://microsoft.visualstudio.com';
+const PAT = 'nszqakn4d5kktanud3rm6sjswphe4eoxx6qwmsxbiohqqasmiedq';
 
 (async () => {
     console.log('Authenticating...');
@@ -14,10 +14,7 @@ const PAT = "nszqakn4d5kktanud3rm6sjswphe4eoxx6qwmsxbiohqqasmiedq";
     const git = await connection.getGitApi();
 
     state.repoIds = await updateRepos(git, state.repoIds);
-    
-    console.log(JSON.stringify(state, null, 4));
 
-    // console.log(JSON.stringify(repos, null, 4));
-    // git.getPullRequests()
-    // console.log('checking for new PRs');
-})()
+    console.log('Operation complete. Saving new state...');
+    setState(state);
+})();
