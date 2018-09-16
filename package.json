@@ -8,10 +8,12 @@
   "private": true,
   "dependencies": {
     "azure-devops-node-api": "^6.6.0",
-    "jsonfile": "^5.0.0"
+    "jsonfile": "^5.0.0",
+    "node-notifier": "^5.2.1"
   },
   "devDependencies": {
+    "@types/jsonfile": "^4.0.1",
     "@types/node": "^10.9.4",
-    "@types/jsonfile": "^4.0.1"
+    "@types/node-notifier": "^0.0.28"
   }
 }
