@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer that periodically triggers pr-notify.service
+
+[Timer]
+OnStartupSec=30s
+OnActiveSec=30s
+OnUnitActiveSec=15min
+
+[Install]
+WantedBy=timers.target
