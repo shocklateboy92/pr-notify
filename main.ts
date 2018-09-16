@@ -4,6 +4,7 @@ import { getState, setState } from './state';
 import { fetchActivePullRequests } from './pull-requests';
 import { getUpdated } from './diff';
 import { notify } from './notify';
+import { fetchImages } from './images';
 
 const ORG_URL = 'https://microsoft.visualstudio.com';
 const PAT = 'nszqakn4d5kktanud3rm6sjswphe4eoxx6qwmsxbiohqqasmiedq';
@@ -25,6 +26,9 @@ const PAT = 'nszqakn4d5kktanud3rm6sjswphe4eoxx6qwmsxbiohqqasmiedq';
 
     const updated = getUpdated(state.pullRequests, newPullRequests);
     console.log(`Found ${updated.length} new pull requests.`);
+
+    // Ensure images are already cached before calling notify
+    fetchImages(updated);
 
     notify(updated);
     
