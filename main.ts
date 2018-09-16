@@ -13,7 +13,6 @@ const PAT = "nszqakn4d5kktanud3rm6sjswphe4eoxx6qwmsxbiohqqasmiedq";
     const state = await getState();
     const git = await connection.getGitApi();
 
-    debugger;
     state.repoIds = await updateRepos(git, state.repoIds);
     
     console.log(JSON.stringify(state, null, 4));
