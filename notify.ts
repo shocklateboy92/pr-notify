@@ -1,5 +1,6 @@
 import * as notifier from 'node-notifier';
 import { GitPullRequest } from 'azure-devops-node-api/interfaces/GitInterfaces';
+import { IMAGE_CACHE_PATH } from './images';
 
 const MAX_NOTIFICATIONS = 5;
 
@@ -21,7 +22,7 @@ export function notify(updatedPrList: GitPullRequest[]) {
             message: `<strong>${
                 pr.createdBy.displayName
             }</strong> has created a new Pull Request to ${pr.repository.name}`,
-            icon: pr.createdBy.imageUrl
+            icon: IMAGE_CACHE_PATH + pr.createdBy.id
         });
     }
 }

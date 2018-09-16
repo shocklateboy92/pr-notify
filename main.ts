@@ -28,7 +28,7 @@ const PAT = 'nszqakn4d5kktanud3rm6sjswphe4eoxx6qwmsxbiohqqasmiedq';
     console.log(`Found ${updated.length} new pull requests.`);
 
     // Ensure images are already cached before calling notify
-    fetchImages(updated);
+    await fetchImages(authHandler, updated);
 
     notify(updated);
     
