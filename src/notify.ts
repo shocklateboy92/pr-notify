@@ -1,4 +1,4 @@
-import * as notifier from 'node-notifier';
+import notifier from 'node-notifier';
 import { GitPullRequest } from 'azure-devops-node-api/interfaces/GitInterfaces';
 import { IMAGE_CACHE_PATH } from './images';
 

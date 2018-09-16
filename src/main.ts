@@ -5,7 +5,7 @@ import { fetchActivePullRequests } from './pull-requests';
 import { getUpdated } from './diff';
 import { notify } from './notify';
 import { fetchImages } from './images';
-import { PAT } from './config';
+import { PAT } from '../config';
 
 const ORG_URL = 'https://microsoft.visualstudio.com';
 

@@ -6,18 +6,11 @@
     "configurations": [
         {
             "type": "node",
-            "request": "attach",
-            "name": "Attach",
-            "port": 9229
-        },
-        {
-            "type": "node",
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/dist/main.js",
             "console": "internalConsole",
             "cwd": "${workspaceFolder}/dist",
-            "preLaunchTask": "tsc: build - tsconfig.json",
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"
             ]
