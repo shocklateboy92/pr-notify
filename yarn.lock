@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@types/node@^10.9.4":
+  version "10.9.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.9.4.tgz#0f4cb2dc7c1de6096055357f70179043c33e9897"
+
 azure-devops-node-api@^6.6.0:
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/azure-devops-node-api/-/azure-devops-node-api-6.6.0.tgz#6fb34b282f62c9c29719eea57c49d10b62258f53"

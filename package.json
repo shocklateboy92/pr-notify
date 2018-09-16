@@ -7,6 +7,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@types/node": "^10.9.4",
     "azure-devops-node-api": "^6.6.0"
   }
 }
