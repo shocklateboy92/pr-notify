@@ -2,7 +2,7 @@
   "name": "pr-notify",
   "version": "1.0.0",
   "description": "Little script to notify you of new PRs in Azure DevOps",
-  "main": "dist/index.js",
+  "main": "dist/main.js",
   "author": "Lasath Fernando <devel@lasath.org>",
   "license": "MIT",
   "private": true,
