@@ -62,10 +62,9 @@ const download = (options: RequestOptions, url: string, dest: string) =>
                 const request = http
                     .get(url, options, function(response) {
                         response.pipe(file);
-                        file.on('finish', function() {
-                            file.close(); // close() is async
-                            resolve();
-                        });
+                        file.on('finish', file.close)
+                            .on('close', resolve)
+                            .on('error', reject);
                     })
                     .on('error', function(err) {
                         // Delete the file async. (But we don't check the result)
