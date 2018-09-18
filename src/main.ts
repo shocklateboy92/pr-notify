@@ -6,8 +6,7 @@ import { getUpdated } from './diff';
 import { notify } from './notify';
 import { fetchImages } from './images';
 import { PAT } from '../config';
-
-const ORG_URL = 'https://microsoft.visualstudio.com';
+import { ORG_URL } from './constants';
 
 (async () => {
     console.log('Authenticating...');
@@ -31,7 +30,7 @@ const ORG_URL = 'https://microsoft.visualstudio.com';
     await fetchImages(authHandler, updated);
 
     notify(updated);
-    
+
     state.pullRequests = newPullRequests;
 
     console.log('Operation complete. Saving new state...');
