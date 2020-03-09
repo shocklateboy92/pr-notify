@@ -3,8 +3,9 @@ import gitm from "azure-devops-node-api/GitApi";
 
 const PROJECT_NAME = "Universal Store";
 const WATCHED_REPOS = [
-    "OneRF.Library.OneStore.ProductIdentity",
-    "RedTiger.Library.Keystone"
+    "Store.Cart",
+    "Store.Cart.Services",
+    "Store.Web.Services.Commerce-Integration"
 ];
 
 export async function updateRepos(

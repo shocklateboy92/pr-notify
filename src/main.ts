@@ -1,38 +1,41 @@
-import * as azdev from 'azure-devops-node-api';
-import { updateRepos } from './repos';
-import { getState, setState } from './state';
-import { fetchActivePullRequests } from './pull-requests';
-import { getUpdated } from './diff';
-import { notify } from './notify';
-import { fetchImages } from './images';
-import { ORG_URL, PAT_PATH } from './constants';
-import { readFileSync } from 'fs';
+import * as azdev from "azure-devops-node-api";
+import { updateRepos } from "./repos";
+import { getState, setState } from "./state";
+import { fetchActivePullRequests } from "./pull-requests";
+import { getUpdated } from "./diff";
+import { notify } from "./notify";
+import { fetchImages } from "./images";
+import { ORG_URL, PAT_PATH } from "./constants";
+import { readFileSync } from "fs";
 
-console.log('Authenticating...');
-const authHandler = azdev.getPersonalAccessTokenHandler(
-    readFileSync(PAT_PATH, { encoding: 'utf-8' })
-);
-const connection = new azdev.WebApi(ORG_URL, authHandler);
+(async () => {
+    console.log("Authenticating...");
+    const authHandler = azdev.getPersonalAccessTokenHandler(
+        readFileSync(PAT_PATH, { encoding: "utf-8" })
+    );
 
-const state = await getState();
-const git = await connection.getGitApi();
+    const connection = new azdev.WebApi(ORG_URL, authHandler);
 
-state.repoIds = await updateRepos(git, state.repoIds);
+    const state = await getState();
+    const git = await connection.getGitApi();
 
-const newPullRequests = await fetchActivePullRequests(
-    git,
-    Object.values(state.repoIds)
-);
+    state.repoIds = await updateRepos(git, state.repoIds);
 
-const updated = getUpdated(state.pullRequests, newPullRequests);
-console.log(`Found ${updated.length} new pull requests.`);
+    const newPullRequests = await fetchActivePullRequests(
+        git,
+        Object.values(state.repoIds)
+    );
 
-// Ensure images are already cached before calling notify
-await fetchImages(authHandler, updated);
+    const updated = getUpdated(state.pullRequests, newPullRequests);
+    console.log(`Found ${updated.length} new pull requests.`);
 
-notify(updated);
+    // Ensure images are already cached before calling notify
+    await fetchImages(authHandler, updated);
 
-state.pullRequests = newPullRequests;
+    notify(updated);
 
-console.log('Operation complete. Saving new state...');
-setState(state);
+    state.pullRequests = newPullRequests;
+
+    console.log("Operation complete. Saving new state...");
+    setState(state);
+})();
