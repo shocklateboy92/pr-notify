@@ -3,16 +3,12 @@
 set -e
 set -x
 
-LOCAL_PREFIX=$HOME/.local
+LOCAL_PREFIX=$HOME
+LIB_DIR=$LOCAL_PREFIX/lib/pr-notify
 
 # Ensure directories exist
-mkdir -p $LOCAL_PREFIX/{lib,var/pr-notify}
+mkdir -p $LIB_DIR
 
 # Install the JS bundle
-cp dist/main.js $LOCAL_PREFIX/lib/pr-notify.js
+cp dist/main.js $LIB_DIR/pr-notify.js
 
-# Install the systemd units
-cp systemd/* $HOME/.config/systemd/user
-
-# Tell systemd to look for new units
-systemctl --user daemon-reload

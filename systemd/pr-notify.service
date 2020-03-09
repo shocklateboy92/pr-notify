@@ -1,6 +1,0 @@
-[Unit]
-Description=Check for updated pull requests
-
-[Service]
-ExecStart=node %h/.local/lib/pr-notify.js
-WorkingDirectory=%h/.local/var/pr-notify
