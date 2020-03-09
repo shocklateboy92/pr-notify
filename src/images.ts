@@ -1,9 +1,9 @@
-import { GitPullRequest } from 'azure-devops-node-api/interfaces/GitInterfaces';
-import * as fs from 'fs';
-import { RequestOptions } from 'http';
-import * as http from 'https';
-import * as os from 'os';
-import { IRequestHandler } from 'typed-rest-client/Interfaces';
+import { GitPullRequest } from "azure-devops-node-api/interfaces/GitInterfaces";
+import * as fs from "fs";
+import { RequestOptions } from "http";
+import * as http from "https";
+import * as os from "os";
+import { IRequestHandler } from "typed-rest-client/Interfaces";
 
 export const IMAGE_CACHE_PATH = `${os.tmpdir()}/pr-notify-image-cache/`;
 
@@ -15,8 +15,10 @@ export function fetchImages(
     const uniqueAuthors = prList
         .filter(
             (pr, index) =>
-                prList.findIndex(pri => pri.createdBy.id == pr.createdBy.id) ===
-                index
+                pr.createdBy &&
+                prList.findIndex(
+                    pri => pri.createdBy && pri.createdBy.id == pr.createdBy!.id
+                ) === index
         )
         .map(pr => pr.createdBy);
 
@@ -27,7 +29,7 @@ export function fetchImages(
         fs.mkdirSync(IMAGE_CACHE_PATH);
     } catch (err) {
         // Since we're unconditionally creating this, we swallow EEXIST
-        if (err.code !== 'EEXIST') {
+        if (err.code !== "EEXIST") {
             throw err;
         }
     }
@@ -38,11 +40,13 @@ export function fetchImages(
 
     return Promise.all(
         uniqueAuthors.map(author =>
-            download(
-                requestOptions,
-                author.imageUrl,
-                IMAGE_CACHE_PATH + author.id
-            )
+            author?.imageUrl
+                ? download(
+                      requestOptions,
+                      author.imageUrl,
+                      IMAGE_CACHE_PATH + author.id
+                  )
+                : Promise.resolve()
         )
     );
 }
@@ -58,15 +62,15 @@ const download = (options: RequestOptions, url: string, dest: string) =>
         fs.access(dest, fs.constants.F_OK, err => {
             if (err) {
                 // File doesn't already exist. Go download it
-                const file = fs.createWriteStream(dest, { flags: 'wx' });
+                const file = fs.createWriteStream(dest, { flags: "wx" });
                 const request = http
                     .get(url, options, function(response) {
                         response.pipe(file);
-                        file.on('finish', file.close)
-                            .on('close', resolve)
-                            .on('error', reject);
+                        file.on("finish", file.close)
+                            .on("close", resolve)
+                            .on("error", reject);
                     })
-                    .on('error', function(err) {
+                    .on("error", function(err) {
                         // Delete the file async. (But we don't check the result)
                         fs.unlink(dest, _ => null);
                         reject(err);
