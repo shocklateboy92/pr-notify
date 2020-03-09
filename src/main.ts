@@ -37,6 +37,8 @@ import logger from "./logger";
 
     state.pullRequests = newPullRequests;
 
+    console.log(state.pullRequests.length);
+
     logger("Operation complete. Saving new state...");
     setState(state);
 })();
