@@ -6,6 +6,8 @@
             "dom",
             "esnext"
         ],
+        "module": "ESNext",
+        "target": "ES2017",
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
         "sourceMap": true,
