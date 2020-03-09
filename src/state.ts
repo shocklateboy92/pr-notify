@@ -1,5 +1,6 @@
-import * as jsonfile from 'jsonfile';
-import { GitPullRequest } from 'azure-devops-node-api/interfaces/GitInterfaces';
+import * as jsonfile from "jsonfile";
+import { GitPullRequest } from "azure-devops-node-api/interfaces/GitInterfaces";
+import { STATE_FILE } from "./constants";
 
 export interface IState {
     repoIds: {
@@ -8,14 +9,11 @@ export interface IState {
     pullRequests: GitPullRequest[];
 }
 
-const STATE_FILE = './state.json';
-
 export const getState = async (): Promise<IState> => {
     try {
-        // stupid type definition didn't define the overload correctly
-        return ((await jsonfile.readFile(STATE_FILE)) as any) as IState;
+        return await jsonfile.readFile(STATE_FILE);
     } catch {
-        console.log('Missing state file. Assuming initial state...');
+        console.log("Missing state file. Assuming initial state...");
         return {
             repoIds: {},
             pullRequests: []
