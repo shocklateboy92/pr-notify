@@ -1,5 +1,6 @@
 import { IState } from "./state";
 import gitm from "azure-devops-node-api/GitApi";
+import logger from "./logger";
 
 const PROJECT_NAME = "Universal Store";
 const WATCHED_REPOS = [
@@ -17,11 +18,11 @@ export async function updateRepos(
         return prevRepos;
     }
 
-    console.log("Missing IDs for some pepos. Fetching repo list...");
+    logger("Missing IDs for some pepos. Fetching repo list...");
     const repos = await git.getRepositories(PROJECT_NAME);
     const results: IState["repoIds"] = {};
 
-    console.log(`Fetched ${repos.length} repos. Processing results...`);
+    logger(`Fetched ${repos.length} repos. Processing results...`);
     for (const repo of repos) {
         if (!(repo.name && repo.id)) {
             console.error(`Got invalid repo '${JSON.stringify(repo)}'`);

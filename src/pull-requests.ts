@@ -1,12 +1,13 @@
-import { IGitApi } from 'azure-devops-node-api/GitApi';
+import { IGitApi } from "azure-devops-node-api/GitApi";
 import {
     PullRequestStatus,
     GitPullRequestSearchCriteria,
     GitPullRequest
-} from 'azure-devops-node-api/interfaces/GitInterfaces';
+} from "azure-devops-node-api/interfaces/GitInterfaces";
+import logger from "./logger";
 
 export async function fetchActivePullRequests(git: IGitApi, repoIds: string[]) {
-    console.log('Fetching active pull requests...');
+    logger("Fetching active pull requests...");
     const criteria: Partial<GitPullRequestSearchCriteria> = {
         status: PullRequestStatus.Active
     };
@@ -22,10 +23,8 @@ export async function fetchActivePullRequests(git: IGitApi, repoIds: string[]) {
         results = results.concat(prs);
     }
 
-    console.log(
-        `Fetched ${results.length} active pull requets for ${
-            repoIds.length
-        } repos.`
+    logger(
+        `Fetched ${results.length} active pull requets for ${repoIds.length} repos.`
     );
     return results;
 }

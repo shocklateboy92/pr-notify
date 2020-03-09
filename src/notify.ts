@@ -2,6 +2,7 @@ import notifier from "node-notifier";
 import { GitPullRequest } from "azure-devops-node-api/interfaces/GitInterfaces";
 import { IMAGE_CACHE_PATH } from "./images";
 import { ORG_URL } from "./constants";
+import logger from "./logger";
 
 const MAX_NOTIFICATIONS = 3;
 
@@ -10,7 +11,7 @@ export function notify(updatedPrList: GitPullRequest[]) {
         console.warn(`Notifications throttled to ${5}.`);
     }
 
-    console.log(
+    logger(
         `Firing ${Math.min(
             updatedPrList.length,
             MAX_NOTIFICATIONS

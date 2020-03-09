@@ -7,9 +7,10 @@ import { notify } from "./notify";
 import { fetchImages } from "./images";
 import { ORG_URL, PAT_PATH } from "./constants";
 import { readFileSync } from "fs";
+import logger from "./logger";
 
 (async () => {
-    console.log("Authenticating...");
+    logger("Authenticating...");
     const authHandler = azdev.getPersonalAccessTokenHandler(
         readFileSync(PAT_PATH, { encoding: "utf-8" })
     );
@@ -27,7 +28,7 @@ import { readFileSync } from "fs";
     );
 
     const updated = getUpdated(state.pullRequests, newPullRequests);
-    console.log(`Found ${updated.length} new pull requests.`);
+    logger(`Found ${updated.length} new pull requests.`);
 
     // Ensure images are already cached before calling notify
     await fetchImages(authHandler, updated);
@@ -36,6 +37,6 @@ import { readFileSync } from "fs";
 
     state.pullRequests = newPullRequests;
 
-    console.log("Operation complete. Saving new state...");
+    logger("Operation complete. Saving new state...");
     setState(state);
 })();

@@ -4,6 +4,7 @@ import { RequestOptions } from "http";
 import * as http from "https";
 import * as os from "os";
 import { IRequestHandler } from "typed-rest-client/Interfaces";
+import logger from "./logger";
 
 export const IMAGE_CACHE_PATH = `${os.tmpdir()}/pr-notify-image-cache/`;
 
@@ -22,7 +23,7 @@ export function fetchImages(
         )
         .map(pr => pr.createdBy);
 
-    console.log(`Found ${uniqueAuthors.length} authors. Downloading images...`);
+    logger(`Found ${uniqueAuthors.length} authors. Downloading images...`);
 
     try {
         // CBF make this async.
