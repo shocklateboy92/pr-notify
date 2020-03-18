@@ -8,7 +8,7 @@ pkgname=pr-notify
 pkgver=1.0
 pkgrel=1
 pkgdesc="My Kargos script to check for PRs in Azure Devops"
-arch=('any)
+arch=('any')
 url="https://github.com/shocklateboy92/pr-notify"
 license=('MIT')
 groups=('kargos')
@@ -28,17 +28,23 @@ noextract=()
 md5sums=()
 validpgpkeys=()
 
-prepare() {
-}
-
 build() {
-	yarn build --mode=production
-    cp dist/main.js pkg/lib/js/pr-notify.js
+    yarn;
+	yarn build --mode=production;
 }
 
 package() {
-    # The -rT is to ensure all the hidden files are copied,
-    # without creating a subdirectory in DEST_DIR
-    # The -L is to follow symlinks, rather than copying them.
-    cp -rvTL pkg "${pkgdir}/usr/local";
+    destdir="${pkgdir}/usr/local";
+    cd ../../;
+
+    lib_dir="${destdir}/lib/js";
+    mkdir -p "$lib_dir";
+    cp "./dist/main.js" "$lib_dir/pr-notify.js";
+
+    icon_dir="$destdir/share/icons";
+    mkdir -p "$icon_dir";
+    cp git-pull-request-icon.svg "$icon_dir";
+
+    cp ./src/kargos-script.pr-notify.300s.sh "$destdir/bin/";
 }
+
