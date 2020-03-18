@@ -27,7 +27,7 @@ export function notify(updatedPrList: GitPullRequest[]) {
 
         notifier.notify({
             title: pr.title,
-            message: `<a href='${ORG_URL}/DefaultCollection/${pr.repository.project.name}/_git/${pr.repository.name}/pullrequest/${pr.pullRequestId}'>${pr.createdBy.displayName} has created a new Pull Request to ${pr.repository.name}</a>`,
+            message: `<a href='${ORG_URL}/${pr.repository.project.name}/_git/${pr.repository.name}/pullrequest/${pr.pullRequestId}'>${pr.createdBy.displayName} has created a new Pull Request to ${pr.repository.name}</a>`,
             icon: IMAGE_CACHE_PATH + pr.createdBy.id
         });
     }

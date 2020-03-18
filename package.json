@@ -24,6 +24,6 @@
   },
   "scripts": {
     "build": "webpack",
-    "start": "yarn build && node --unhandled-rejections=strict ./dist/main.js"
+    "start": "yarn build && node --unhandled-rejections=strict ./dist/pr-notify.js"
   }
 }
