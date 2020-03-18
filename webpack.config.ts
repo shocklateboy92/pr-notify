@@ -5,7 +5,7 @@ const config: webpack.Configuration = {
     entry: './src/main.ts',
     output: {
         path: path.resolve('./dist'),
-        filename: 'main.js'
+        filename: 'pr-notify.js'
     },
     mode: 'development',
     target: 'node',

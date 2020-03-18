@@ -33,18 +33,17 @@ build() {
 	yarn build --mode=production;
 }
 
+install_file() { 
+    mkdir -p "$2";
+    cp "$1" "$2/";
+}
+
 package() {
     destdir="${pkgdir}/usr/local";
     cd ../../;
 
-    lib_dir="${destdir}/lib/js";
-    mkdir -p "$lib_dir";
-    cp "./dist/main.js" "$lib_dir/pr-notify.js";
-
-    icon_dir="$destdir/share/icons";
-    mkdir -p "$icon_dir";
-    cp git-pull-request-icon.svg "$icon_dir";
-
-    cp ./src/kargos-script.pr-notify.300s.sh "$destdir/bin/";
+    install_file "./dist/pr-notify.js" "${destdir}/lib/js";
+    install_file "./git-pull-request-icon.svg" "$destdir/share/icons";
+    install_file "./src/kargos-script.pr-notify.300s.sh" "$destdir/bin";
 }
 
