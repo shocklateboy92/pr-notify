@@ -27,7 +27,7 @@ import logger from "./logger";
         Object.values(state.repoIds)
     );
 
-    const updated = getUpdated(state.pullRequests, newPullRequests);
+    const updated = getUpdated(state.pullRequestIds, newPullRequests);
     logger(`Found ${updated.length} new pull requests.`);
 
     // Ensure images are already cached before calling notify
@@ -35,10 +35,16 @@ import logger from "./logger";
 
     notify(updated);
 
-    state.pullRequests = newPullRequests;
+    state.pullRequestIds = newPullRequests
+        .map(p => p.pullRequestId)
+        .filter(isNotNull);
 
-    console.log(state.pullRequests.length);
+    console.log(state.pullRequestIds.length);
 
     logger("Operation complete. Saving new state...");
     setState(state);
 })();
+
+function isNotNull<T>(it: T): it is NonNullable<T> {
+    return it != null;
+}
