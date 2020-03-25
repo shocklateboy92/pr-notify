@@ -42,7 +42,7 @@ import { getKargosUiString } from "./kargos-ui";
     logger(`Found ${updated.length} new pull requests.`);
 
     // Ensure images are already cached before calling notify
-    await fetchImages(authHandler, updated);
+    await fetchImages(authHandler, newPullRequests);
 
     notify(config, updated);
 
@@ -53,7 +53,7 @@ import { getKargosUiString } from "./kargos-ui";
     logger("Operation complete. Saving new state...");
     setState(config, state);
 
-    console.log(getKargosUiString(results));
+    console.log(getKargosUiString(config, results));
 })();
 
 function isNotNull<T>(it: T): it is NonNullable<T> {

@@ -27,8 +27,18 @@ export function notify(config: IConfig, updatedPrList: GitPullRequest[]) {
 
         notifier.notify({
             title: pr.title,
-            message: `<a href='${config.organization}/${pr.repository.project.name}/_git/${pr.repository.name}/pullrequest/${pr.pullRequestId}'>${pr.createdBy.displayName} has created a new Pull Request to ${pr.repository.name}</a>`,
+            message: `<a href='${getHref(config, pr)}'>${
+                pr.createdBy.displayName
+            } has created a new Pull Request to ${pr.repository.name}</a>`,
             icon: getImagePathFor(pr)
         });
     }
 }
+
+export const getHref = (config: IConfig, pr: GitPullRequest) => {
+    if (pr.repository?.project) {
+        return encodeURI(
+            `${config.organization}/${pr.repository.project.name}/_git/${pr.repository.name}/pullrequest/${pr.pullRequestId}`
+        );
+    }
+};
