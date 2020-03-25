@@ -1,6 +1,6 @@
 import * as jsonfile from "jsonfile";
-import { STATE_FILE } from "./constants";
 import logger from "./logger";
+import { IConfig } from "./args";
 
 export interface IState {
     repoIds: {
@@ -9,9 +9,9 @@ export interface IState {
     pullRequestIds: number[];
 }
 
-export const getState = async (): Promise<IState> => {
+export const getState = async (config: IConfig): Promise<IState> => {
     try {
-        return await jsonfile.readFile(STATE_FILE);
+        return await jsonfile.readFile(config.stateFile);
     } catch {
         logger("Missing state file. Assuming initial state...");
         return {
@@ -21,5 +21,5 @@ export const getState = async (): Promise<IState> => {
     }
 };
 
-export const setState = (state: IState) =>
-    jsonfile.writeFile(STATE_FILE, state, { spaces: 2 });
+export const setState = (config: IConfig, state: IState) =>
+    jsonfile.writeFile(config.stateFile, state, { spaces: 2 });

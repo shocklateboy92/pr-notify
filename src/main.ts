@@ -8,6 +8,7 @@ import { fetchImages } from "./images";
 import { ORG_URL, PAT_PATH } from "./constants";
 import { readFileSync } from "fs";
 import logger from "./logger";
+import { getConfig } from "./args";
 
 (async () => {
     logger("Authenticating...");
@@ -15,9 +16,11 @@ import logger from "./logger";
         readFileSync(PAT_PATH, { encoding: "utf-8" })
     );
 
+    const config = getConfig();
+
     const connection = new azdev.WebApi(ORG_URL, authHandler);
 
-    const state = await getState();
+    const state = await getState(config);
     const git = await connection.getGitApi();
 
     state.repoIds = await updateRepos(git, state.repoIds);
@@ -42,7 +45,7 @@ import logger from "./logger";
     console.log(state.pullRequestIds.length);
 
     logger("Operation complete. Saving new state...");
-    setState(state);
+    setState(config, state);
 })();
 
 function isNotNull<T>(it: T): it is NonNullable<T> {
