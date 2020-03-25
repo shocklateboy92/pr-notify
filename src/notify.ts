@@ -1,12 +1,12 @@
 import notifier from "node-notifier";
 import { GitPullRequest } from "azure-devops-node-api/interfaces/GitInterfaces";
 import { IMAGE_CACHE_PATH } from "./images";
-import { ORG_URL } from "./constants";
 import logger from "./logger";
+import { IConfig } from "./args";
 
 const MAX_NOTIFICATIONS = 3;
 
-export function notify(updatedPrList: GitPullRequest[]) {
+export function notify(config: IConfig, updatedPrList: GitPullRequest[]) {
     if (updatedPrList.length > MAX_NOTIFICATIONS) {
         console.warn(`Notifications throttled to ${5}.`);
     }
@@ -27,7 +27,7 @@ export function notify(updatedPrList: GitPullRequest[]) {
 
         notifier.notify({
             title: pr.title,
-            message: `<a href='${ORG_URL}/${pr.repository.project.name}/_git/${pr.repository.name}/pullrequest/${pr.pullRequestId}'>${pr.createdBy.displayName} has created a new Pull Request to ${pr.repository.name}</a>`,
+            message: `<a href='${config.organization}/${pr.repository.project.name}/_git/${pr.repository.name}/pullrequest/${pr.pullRequestId}'>${pr.createdBy.displayName} has created a new Pull Request to ${pr.repository.name}</a>`,
             icon: IMAGE_CACHE_PATH + pr.createdBy.id
         });
     }

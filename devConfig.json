@@ -1,3 +1,4 @@
 {
-  "stateFile": "dist/state.json"
+  "stateFile": "dist/state.json",
+  "organization": "https://dev.azure.com/microsoft"
 }
