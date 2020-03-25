@@ -8,6 +8,7 @@ import { fetchImages } from "./images";
 import { readFileSync } from "fs";
 import logger from "./logger";
 import { getConfig } from "./args";
+import { getKargosUiString } from "./kargos-ui";
 
 (async () => {
     const config = getConfig();
@@ -30,10 +31,12 @@ import { getConfig } from "./args";
 
     state.repoIds = await updateRepos(git, state.repoIds);
 
-    const newPullRequests = await fetchActivePullRequests(
+    const results = await fetchActivePullRequests(
         git,
         Object.values(state.repoIds)
     );
+
+    const newPullRequests = results.flatMap(a => a);
 
     const updated = getUpdated(state.pullRequestIds, newPullRequests);
     logger(`Found ${updated.length} new pull requests.`);
@@ -47,10 +50,10 @@ import { getConfig } from "./args";
         .map(p => p.pullRequestId)
         .filter(isNotNull);
 
-    console.log(state.pullRequestIds.length);
-
     logger("Operation complete. Saving new state...");
     setState(config, state);
+
+    console.log(getKargosUiString(results));
 })();
 
 function isNotNull<T>(it: T): it is NonNullable<T> {

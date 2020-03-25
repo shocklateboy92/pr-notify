@@ -12,7 +12,8 @@ export async function fetchActivePullRequests(git: IGitApi, repoIds: string[]) {
         status: PullRequestStatus.Active
     };
 
-    let results: GitPullRequest[] = [];
+    let results: GitPullRequest[][] = [];
+    let count = 0;
     for (const repoId of repoIds) {
         const prs = await git.getPullRequests(
             repoId,
@@ -20,11 +21,10 @@ export async function fetchActivePullRequests(git: IGitApi, repoIds: string[]) {
             criteria as any
         );
 
-        results = results.concat(prs);
+        results.push(prs);
+        count += prs.length;
     }
 
-    logger(
-        `Fetched ${results.length} active pull requets for ${repoIds.length} repos.`
-    );
+    logger(`Fetched ${count} active pull requets for ${repoIds.length} repos.`);
     return results;
 }

@@ -1,6 +1,6 @@
 import notifier from "node-notifier";
 import { GitPullRequest } from "azure-devops-node-api/interfaces/GitInterfaces";
-import { IMAGE_CACHE_PATH } from "./images";
+import { getImagePathFor } from "./images";
 import logger from "./logger";
 import { IConfig } from "./args";
 
@@ -28,7 +28,7 @@ export function notify(config: IConfig, updatedPrList: GitPullRequest[]) {
         notifier.notify({
             title: pr.title,
             message: `<a href='${config.organization}/${pr.repository.project.name}/_git/${pr.repository.name}/pullrequest/${pr.pullRequestId}'>${pr.createdBy.displayName} has created a new Pull Request to ${pr.repository.name}</a>`,
-            icon: IMAGE_CACHE_PATH + pr.createdBy.id
+            icon: getImagePathFor(pr)
         });
     }
 }

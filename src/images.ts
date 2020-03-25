@@ -6,7 +6,10 @@ import * as os from "os";
 import { IRequestHandler } from "typed-rest-client/Interfaces";
 import logger from "./logger";
 
-export const IMAGE_CACHE_PATH = `${os.tmpdir()}/pr-notify-image-cache/`;
+const IMAGE_CACHE_PATH = `${os.tmpdir()}/pr-notify-image-cache/`;
+
+export const getImagePathFor = (pr: GitPullRequest) =>
+    pr.createdBy ? IMAGE_CACHE_PATH + pr.createdBy.id : undefined;
 
 export function fetchImages(
     authHandler: IRequestHandler,
