@@ -2,9 +2,12 @@ import notifier from "node-notifier";
 import { GitPullRequest } from "azure-devops-node-api/interfaces/GitInterfaces";
 import { getImagePathFor } from "./images";
 import logger from "./logger";
-import { IConfig } from "./args";
 
 const MAX_NOTIFICATIONS = 3;
+
+interface IConfig {
+    organization: string;
+}
 
 export function notify(config: IConfig, updatedPrList: GitPullRequest[]) {
     if (updatedPrList.length > MAX_NOTIFICATIONS) {
