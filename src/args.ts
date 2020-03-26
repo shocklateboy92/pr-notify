@@ -61,7 +61,7 @@ export const parseArgsAndRunApp = () =>
         })
         .command(
             ["notfiy", "$0"],
-            "Notify",
+            "Fire notifications for any PRs created since previous invocation",
             builder => builder,
             async config => {
                 logger("Authenticating...");

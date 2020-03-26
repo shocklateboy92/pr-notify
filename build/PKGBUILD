@@ -5,7 +5,7 @@
 
 # Maintainer: Your Name <devel@lasath.org>
 pkgname=pr-notify
-pkgver=1.1
+pkgver=1.2
 pkgrel=1
 pkgdesc="My Kargos script to check for PRs in Azure Devops"
 arch=('any')
