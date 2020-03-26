@@ -39,6 +39,13 @@ export const getConfig = () =>
             description:
                 "Path of plain text file file containing just the Personal Access Token"
         })
+        .option("invokeCommand", {
+            alias: ["self", "bashOverride"],
+            type: "string",
+            description:
+                "Command to re-invoke this exectuable for dismissing PRs",
+            default: process.argv.join(" ")
+        })
         .config("config", "Path to JSON configuration file", path =>
             fs.existsSync(path)
                 ? JSON.parse(fs.readFileSync(path, "utf-8"))
@@ -103,7 +110,9 @@ export const getConfig = () =>
                 logger("Operation complete. Saving new state...");
                 setState(config, state);
 
-                console.log(getKargosUiString(config, results));
+                console.log(
+                    getKargosUiString({ ...config, ...state }, results)
+                );
             }
         )
         .command(
@@ -118,7 +127,10 @@ export const getConfig = () =>
                 const state = await getState(config);
                 await setState(config, {
                     ...state,
-                    hiddenPrIds: [...state.hiddenPrIds, config.id]
+                    hiddenPrs: [
+                        ...state.hiddenPrs,
+                        { id: config.id, hideTime: new Date() }
+                    ]
                 });
             }
         )

@@ -6,7 +6,7 @@ export interface IState {
         [key: string]: string;
     };
     pullRequestIds: number[];
-    hiddenPrIds: number[];
+    hiddenPrs: { id: number; hideTime: Date }[];
 }
 
 interface IConfig {
@@ -17,7 +17,7 @@ export const getState = async (config: IConfig): Promise<IState> => {
     const initial = {
         repoIds: {},
         pullRequestIds: [],
-        hiddenPrIds: []
+        hiddenPrs: []
     };
     try {
         return Object.assign(

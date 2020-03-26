@@ -15,11 +15,7 @@ export async function fetchActivePullRequests(git: IGitApi, repoIds: string[]) {
     let results: GitPullRequest[][] = [];
     let count = 0;
     for (const repoId of repoIds) {
-        const prs = await git.getPullRequests(
-            repoId,
-            // Man these type definitions are really terrible
-            criteria as any
-        );
+        const prs = await git.getPullRequests(repoId, criteria);
 
         results.push(prs);
         count += prs.length;
