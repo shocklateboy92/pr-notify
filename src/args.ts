@@ -13,9 +13,9 @@ import { readFileSync } from "fs";
 import logger from "./logger";
 import { getKargosUiString } from "./kargos-ui";
 
-export type IConfig = ReturnType<typeof getConfig>;
+export type IConfig = ReturnType<typeof parseArgsAndRunApp>;
 
-export const getConfig = () =>
+export const parseArgsAndRunApp = () =>
     yargs
         .option("stateFile", {
             type: "string",

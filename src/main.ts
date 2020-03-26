@@ -1,3 +1,3 @@
-import { getConfig } from "./args";
+import { parseArgsAndRunApp } from "./args";
 
-getConfig();
+parseArgsAndRunApp();
