@@ -56,19 +56,28 @@ export const parseArgsAndRunApp = () =>
             if (args.pat || args.patFilePath) {
                 return true;
             } else {
-                throw new Error("Either pat or patFilePath must be provided.");
+                throw new Error(
+                    "FATAL: Either pat or patFilePath must be provided."
+                );
             }
         })
         .command(
             ["notfiy", "$0"],
             "Fire notifications for any PRs created since previous invocation",
             builder =>
-                builder.option("iconSize", {
-                    type: "number",
-                    default: 22,
-                    description:
-                        "Size (in pixels) for the width and height (one number) of all icons."
-                }),
+                builder
+                    .option("iconSize", {
+                        type: "number",
+                        default: 22,
+                        description:
+                            "Size (in pixels) for the width and height of the icon."
+                    })
+                    .option("thumbnailSize", {
+                        type: "number",
+                        default: 22,
+                        description:
+                            "Size (in pixels) for the width and height the creator profile pictures of PRs"
+                    }),
             async config => {
                 logger("Authenticating...");
                 const authHandler = azdev.getPersonalAccessTokenHandler(

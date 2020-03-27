@@ -8,6 +8,7 @@ interface IConfig {
     hiddenPrs: IState["hiddenPrs"];
     bashOverride?: string;
     iconSize: number;
+    thumbnailSize: number;
 }
 
 const formatValue = (val: unknown) =>
@@ -59,8 +60,8 @@ const formatKargosUiString = (config: IConfig, items: GitPullRequest[][]) =>
                 formatLine(pr.title!, {
                     href: getHref(config, pr),
                     imageURL: getImagePathFor(pr),
-                    imageHeight: config.iconSize,
-                    imageWidth: config.iconSize,
+                    imageHeight: config.thumbnailSize,
+                    imageWidth: config.thumbnailSize,
                     onclick: "href",
                     bash: `${config.bashOverride ||
                         process.argv.join(" ")} dismiss ${pr.pullRequestId}`,
