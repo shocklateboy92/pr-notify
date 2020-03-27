@@ -62,7 +62,13 @@ export const parseArgsAndRunApp = () =>
         .command(
             ["notfiy", "$0"],
             "Fire notifications for any PRs created since previous invocation",
-            builder => builder,
+            builder =>
+                builder.option("iconSize", {
+                    type: "number",
+                    default: 22,
+                    description:
+                        "Size (in pixels) for the width and height (one number) of all icons."
+                }),
             async config => {
                 logger("Authenticating...");
                 const authHandler = azdev.getPersonalAccessTokenHandler(

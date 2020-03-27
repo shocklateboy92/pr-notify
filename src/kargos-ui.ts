@@ -7,6 +7,7 @@ interface IConfig {
     organization: string;
     hiddenPrs: IState["hiddenPrs"];
     bashOverride?: string;
+    iconSize: number;
 }
 
 const formatValue = (val: unknown) =>
@@ -45,7 +46,9 @@ export const getKargosUiString = (
 const formatKargosUiString = (config: IConfig, items: GitPullRequest[][]) =>
     [
         formatLine(items.reduce((a, c) => a + c.length, 0).toString(), {
-            imageURL: "/usr/local/share/icons/git-pull-request-icon.svg"
+            imageURL: "/usr/local/share/icons/git-pull-request-icon.svg",
+            imageWidth: config.iconSize,
+            imageHeight: config.iconSize
         }),
         "---",
         ...items.flatMap(repo => [
@@ -56,8 +59,8 @@ const formatKargosUiString = (config: IConfig, items: GitPullRequest[][]) =>
                 formatLine(pr.title!, {
                     href: getHref(config, pr),
                     imageURL: getImagePathFor(pr),
-                    imageHeight: 22,
-                    imageWidth: 22,
+                    imageHeight: config.iconSize,
+                    imageWidth: config.iconSize,
                     onclick: "href",
                     bash: `${config.bashOverride ||
                         process.argv.join(" ")} dismiss ${pr.pullRequestId}`,
